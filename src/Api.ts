@@ -4,4 +4,4 @@ const api = axios.create({
     baseURL:'https://api.spacexdata.com/v3'
 })
 
-export const getLauches = () => api.get('/launches');
+export const getLaunches = () => api.get('/launches');

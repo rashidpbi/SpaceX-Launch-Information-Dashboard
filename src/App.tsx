@@ -1,33 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import { getLauches } from './Api';
-import { Launch } from './types';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { LaunchProvider } from "./context/LaunchContext";
+import LaunchList from "./components/LaunchList";
+import Filters from "./components/Filters";
 function App() {
-const [LaunchData,setLaunchData] = useState<Launch[]>([]);
-  const getLaunchData = async() =>{
-const result = await getLauches();
-let Launch:Launch[] = result.data;
-console.log(Launch)
-return Launch;
+ 
+  return (<LaunchProvider>
 
-  }
-  
-  useEffect( ()=>{
-    async function fetchData(){
-
-      const LaunchData = await getLaunchData();
-      setLaunchData(LaunchData);
-      
-    }
-   fetchData();
-  },[])
-
-  return (
-    <div className="App">
-  {LaunchData.map((launch)=>launch.mission_name)}
-    </div>
-  );
+<div className="App"><div>
+    
+    <Filters/><LaunchList/></div></div>
+  </LaunchProvider>);
 }
-
 
 export default App;
