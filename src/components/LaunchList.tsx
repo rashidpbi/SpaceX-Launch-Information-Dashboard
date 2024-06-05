@@ -19,6 +19,8 @@ const LaunchList = () => {
             <th>Launched (UTC)</th>
             <th>Location</th>
             <th>Mission</th>
+            <th>orbit</th>
+
             <th>Launch Status</th>
             <th>Rocket</th>
           </tr>
@@ -30,6 +32,7 @@ const LaunchList = () => {
               <td>{new Date(launch.launch_date_utc).toUTCString()}</td>
               <td>{launch.launch_site.site_name}</td>
               <td>{launch.mission_name}</td>
+              <td>{launch.rocket?.second_stage?.payloads?.[1]?.orbit || 'Unknown'}</td>
               <td>{launch.launch_success ? 'Success' : launch.upcoming ? 'Upcoming' : 'Failure'}</td>
               <td>{launch.rocket.rocket_name}</td>
             </tr>
