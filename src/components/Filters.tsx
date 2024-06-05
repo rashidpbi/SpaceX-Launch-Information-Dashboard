@@ -1,19 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { LaunchContext } from '../context/LaunchContext';
-import { Launch } from '../types';
 const Filters = () => {
   const context = useContext(LaunchContext);
   const [status, setStatus] = useState('all');
 //   const [startDate, setStartDate] = useState('');
 //   const [endDate, setEndDate] = useState('');
 //   const [customRange, setCustomRange] = useState(false);
-
+const launches = context?.launches;
+  const setFilteredLaunches = context?.setFilteredLaunches;
   useEffect(() => {
-    if (!context) return; // Early return inside useEffect
+    if (!launches || !setFilteredLaunches) return; // Early return inside useEffect
 
-    const { launches, setFilteredLaunches} = context;
-
-    let filtered:Launch[]= launches;
+    let filtered = launches;
 
     if (status !== 'all') {
       if (status === 'upcoming') {
@@ -35,7 +33,7 @@ const Filters = () => {
     } */
 
     setFilteredLaunches?.(filtered);
-  }, [status]);
+  }, [status,launches, setFilteredLaunches]);
 
   if (!context) return null; // Early return here is safe now
 
