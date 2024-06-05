@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { getLaunches } from '../Api';
-import { Launch } from '../types';
+import React, { createContext, useState, useEffect, ReactNode } from "react";
+import { getLaunches } from "../Api";
+import { Launch } from "../types";
 
 interface LaunchContextProps {
   launches: Launch[];
@@ -9,7 +9,9 @@ interface LaunchContextProps {
   setFilteredLaunches: (launches: Launch[]) => void;
 }
 
-export const LaunchContext = createContext<LaunchContextProps | undefined>(undefined);
+export const LaunchContext = createContext<LaunchContextProps | undefined>(
+  undefined
+);
 
 export const LaunchProvider = ({ children }: { children: ReactNode }) => {
   const [launches, setLaunches] = useState<Launch[]>([]);
@@ -21,7 +23,7 @@ export const LaunchProvider = ({ children }: { children: ReactNode }) => {
       setLoading(true);
       const { data } = await getLaunches();
       setLaunches(data);
-      console.log("data:",data)
+      console.log("data:", data);
       setFilteredLaunches(data);
       setLoading(false);
     };
@@ -30,7 +32,9 @@ export const LaunchProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <LaunchContext.Provider value={{ launches, loading, filteredLaunches, setFilteredLaunches }}>
+    <LaunchContext.Provider
+      value={{ launches, loading, filteredLaunches, setFilteredLaunches }}
+    >
       {children}
     </LaunchContext.Provider>
   );
