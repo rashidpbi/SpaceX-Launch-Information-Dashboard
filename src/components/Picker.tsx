@@ -3,7 +3,7 @@ import { DateRangePicker, RangeKeyDict } from 'react-date-range';
 
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-// import 'font-awesome/css/font-awesome.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 interface RangeState {
   startDate: Date;
@@ -33,11 +33,13 @@ export default function Picker() {
 
   const handleClick = () => {
     setIsShow(!isShow);
+    console.log("isshow:",isShow);
   };
   // if (isShow) {
   return (
     <div>
       <div className="form-group" onClick={handleClick}>
+        hi
         <div
           className="input-group date"
           id="datetimepicker1"
@@ -63,6 +65,7 @@ export default function Picker() {
         </div>
       </div>
       {isShow ? (
+        
         <DateRangePicker
           ranges={[selectionRange]}
           moveRangeOnFirstSelection={false}
@@ -70,6 +73,7 @@ export default function Picker() {
           direction="horizontal"
           onChange={handleSelect}
           showMonthArrow={false}
+          
           
         />
       ) : (

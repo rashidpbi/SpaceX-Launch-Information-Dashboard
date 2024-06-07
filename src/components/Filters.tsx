@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { LaunchContext } from "../context/LaunchContext";
-import Picker from "./Picker";
+import TestPicker from "./TestPicker";
 const Filters = () => {
   const context = useContext(LaunchContext);
   const [status, setStatus] = useState("all");
@@ -66,7 +66,7 @@ const Filters = () => {
   return (
     <div>
       <div>
-       <Picker/>
+       <TestPicker/>
         <label>Status:</label>
         <select
           title="status"
