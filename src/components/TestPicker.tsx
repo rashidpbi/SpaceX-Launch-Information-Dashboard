@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DateRangePicker, RangeKeyDict,createStaticRanges } from 'react-date-range';
+import { useContext } from 'react';
+import { LaunchContext } from "../context/LaunchContext";
 
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -18,7 +20,32 @@ import {
   addYears
 } from "date-fns";
 
+const today = addDays(new Date(),-3721)
 const defineds = {
+  startOfWeek: startOfWeek(today),
+  endOfWeek: endOfWeek(today),
+  startOfLastWeek: startOfWeek(addDays(today, -7)),
+  endOfLastWeek: endOfWeek(addDays(today, -7)),
+  startOfToday: startOfDay(today),
+  startOfLastSevenDay: startOfDay(addDays(today, -7)),
+  startOfLastThirtyDay: startOfDay(addDays(today, -30)),
+  startOfLastNintyDay: startOfDay(addDays(today, -90)),
+  startOfLast180Day: startOfDay(addDays(today, -180)),
+  endOfToday: endOfDay(today),
+  startOfYesterday: startOfDay(addDays(today, -1)),
+  endOfYesterday: endOfDay(addDays(today, -1)),
+  startOfMonth: startOfMonth(today),
+  endOfMonth: endOfMonth(today),
+  startOfLastMonth: startOfMonth(addMonths(today, -1)),
+  endOfLastMonth: endOfMonth(addMonths(today, -1)),
+  startOfYear: startOfYear(today),
+  endOfYear: endOfYear(today),
+  startOflastYear: startOfYear(addYears(today, -1)),
+  endOflastYear: endOfYear(addYears(today, -1)),
+  startOflast2Year: startOfYear(addYears(today, -2)),
+  endOflast2Year: endOfYear(addYears(today, -2))
+};
+/* const defineds = {
   startOfWeek: startOfWeek(new Date()),
   endOfWeek: endOfWeek(new Date()),
   startOfLastWeek: startOfWeek(addDays(new Date(), -7)),
@@ -41,10 +68,9 @@ const defineds = {
   endOflastYear: endOfYear(addYears(new Date(), -1)),
   startOflast2Year: startOfYear(addYears(new Date(), -2)),
   endOflast2Year: endOfYear(addYears(new Date(), -2))
-};
+}; */
 
-
-const initialState = {
+const initialState = {  //to include in case where state can be empty initially
   selection: {
     startDate: new Date(),
     endDate: addDays(new Date(), 30),
@@ -109,8 +135,10 @@ const sideBarOptions = () => {
 };
 export default function TestPicker() {
 
-
-  const [state, setState] = useState(initialState);
+  const context = useContext(LaunchContext);
+  const state = context?.state;
+  const setState = context?.setState;  
+  
   const [open, setOpen] = React.useState(false);
   const sideBar = sideBarOptions();
   const staticRanges = [
@@ -121,21 +149,29 @@ export default function TestPicker() {
 
   const handleSelect = (ranges:RangeKeyDict) => {
     console.log(ranges);
-    setState({ ...state, ...ranges });
+    if(setState===undefined || state ===undefined)return;
+    else{
+
+      setState({ ...state, ...ranges });
+    }
    
   };
-  
+  /* useEffect(()=>{
+    if (!state || !setState) return;
+    if(setState===undefined)return;
+     setState(initialState);
+  },[state,setState]) */
   return (
     <div>
      
      <button type="button" onClick={ () => { setOpen(!open); } }>{!open?'calender':'X'}</button> 
         {open?(<DateRangePicker
             // showSelectionPreview={true}
-            ranges={[state.selection]}
+            ranges={[state?.selection || initialState.selection]}
             onChange={handleSelect}
             months={2}
             minDate={addDays(new Date(), -7200)}
-            maxDate={addDays(new Date(), 900)}
+            maxDate={addDays(new Date(), -721)}
             direction="horizontal"
             // scroll={{ enabled: true }}
             showMonthAndYearPickers={true}

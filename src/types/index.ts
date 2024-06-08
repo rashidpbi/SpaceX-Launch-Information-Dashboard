@@ -105,3 +105,18 @@ export interface Launch {
   };
   crew: string | null;
 }
+
+export interface Test<T>{
+
+  links:T
+}
+export interface Selection{
+  startDate: Date,
+  endDate: Date,
+  key: string
+}
+
+export interface InitialState{
+  selection: Selection,
+  compare: Selection
+}

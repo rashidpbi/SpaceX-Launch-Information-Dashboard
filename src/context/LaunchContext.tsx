@@ -1,12 +1,16 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { getLaunches } from "../Api";
-import { Launch } from "../types";
-
+import { Launch,InitialState } from "../types";
+import {
+  addDays
+} from "date-fns";
 interface LaunchContextProps {
   launches: Launch[];
   loading: boolean;
   filteredLaunches: Launch[];
   setFilteredLaunches: (launches: Launch[]) => void;
+  state:InitialState,
+  setState:(state:InitialState)=>void;
 }
 
 export const LaunchContext = createContext<LaunchContextProps | undefined>(
@@ -17,7 +21,20 @@ export const LaunchProvider = ({ children }: { children: ReactNode }) => {
   const [launches, setLaunches] = useState<Launch[]>([]);
   const [filteredLaunches, setFilteredLaunches] = useState<Launch[]>([]);
   const [loading, setLoading] = useState(true);
-
+  
+  const initialState = {
+    selection: {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 30),
+      key: "selection"
+    },
+    compare: {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 30),
+      key: "compare"
+    }
+  };
+  const [state,setState] = useState(initialState);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -33,7 +50,7 @@ export const LaunchProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <LaunchContext.Provider
-      value={{ launches, loading, filteredLaunches, setFilteredLaunches }}
+      value={{ launches, loading, filteredLaunches, setFilteredLaunches,state,setState }}
     >
       {children}
     </LaunchContext.Provider>
