@@ -111,8 +111,8 @@ export default function TestPicker() {
 
 
   const [state, setState] = useState(initialState);
+  const [open, setOpen] = React.useState(false);
   const sideBar = sideBarOptions();
-  
   const staticRanges = [
     // ...defaultStaticRanges,
     ...createStaticRanges(sideBar)
@@ -122,24 +122,27 @@ export default function TestPicker() {
   const handleSelect = (ranges:RangeKeyDict) => {
     console.log(ranges);
     setState({ ...state, ...ranges });
+   
   };
-
+  
   return (
     <div>
      
-      <DateRangePicker
-          // showSelectionPreview={true}
-          ranges={[state.selection]}
-          onChange={handleSelect}
-          months={2}
-          minDate={addDays(new Date(), -900)}
-          maxDate={addDays(new Date(), 900)}
-          direction="horizontal"
-          // scroll={{ enabled: true }}
-          showMonthAndYearPickers={true}
-          staticRanges={staticRanges}
-         
-        />
+     <button type="button" onClick={ () => { setOpen(!open); } }>{!open?'calender':'X'}</button> 
+        {open?(<DateRangePicker
+            // showSelectionPreview={true}
+            ranges={[state.selection]}
+            onChange={handleSelect}
+            months={2}
+            minDate={addDays(new Date(), -7200)}
+            maxDate={addDays(new Date(), 900)}
+            direction="horizontal"
+            // scroll={{ enabled: true }}
+            showMonthAndYearPickers={true}
+            staticRanges={staticRanges}
+        
+          />):<></>}
+    
     </div>
   );
  
