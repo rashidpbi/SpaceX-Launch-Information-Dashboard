@@ -72,8 +72,8 @@ const defineds = {
 
 const initialState = {  //to include in case where state can be empty initially
   selection: {
-    startDate: new Date(),
-    endDate: addDays(new Date(), 30),
+    startDate: addDays(new Date(), -3720),
+    endDate: addDays(new Date(), -3721),
     key: "selection"
   },
   compare: {
