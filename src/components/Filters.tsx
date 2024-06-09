@@ -3,7 +3,7 @@ import { LaunchContext } from "../context/LaunchContext";
 import TestPicker from "./TestPicker";
 const Filters = () => {
   const context = useContext(LaunchContext);
-  const [status, setStatus] = useState("all");
+  const [status, setStatus] = useState("all launches");
 
   const startDate = context?.state.selection.startDate;
   const endDate = context?.state.selection.endDate;
@@ -40,16 +40,16 @@ const Filters = () => {
     <div>
       <div>
         <TestPicker />
-        <label>Status:</label>
+  
         <select
           title="status"
           value={status}
           onChange={(e) => setStatus(e.target.value)}
         >
-          <option value="all">All</option>
-          <option value="success">Success</option>
-          <option value="failure">Failure</option>
-          <option value="upcoming">Upcoming</option>
+          <option value="all">All launches</option>
+          <option value="success">Success launches</option>
+          <option value="failure">Failure launches</option>
+          <option value="upcoming">Upcoming launches</option>
         </select>
       </div>
       <div>
