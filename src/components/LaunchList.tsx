@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { LaunchContext } from '../context/LaunchContext';
-
+import { Launch } from '../types';
+import LaunchModal from '../api/LaunchModal';
 const LaunchList = () => {
   const context = useContext(LaunchContext);
 
+  const [selectedLaunch, setSelectedLaunch] = useState<Launch | null>(null);
   if (!context) return <div>Loading...</div>;
-
   const { filteredLaunches, loading } = context;
 
   if (loading) return <div>Loading...</div>;
@@ -27,8 +28,8 @@ const LaunchList = () => {
         </thead>
         <tbody>
           {filteredLaunches.map((launch,index) => (
-            <tr key={index}>
-              <td>{launch.flight_number}</td>
+            <tr key={index} onClick={() => setSelectedLaunch(launch)}>
+              <td>{index+1}</td>
               <td>{new Date(launch.launch_date_utc).toUTCString()}</td>
               <td>{launch.launch_site.site_name}</td>
               <td>{launch.mission_name}</td>
@@ -39,6 +40,7 @@ const LaunchList = () => {
           ))}
         </tbody>
       </table>
+      {selectedLaunch && <LaunchModal launch={selectedLaunch} onClose={() => setSelectedLaunch(null)} />}
     </div>
   );
 };
