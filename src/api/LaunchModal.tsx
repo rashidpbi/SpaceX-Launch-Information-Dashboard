@@ -13,7 +13,7 @@ const LaunchModal = ({ launch, onClose }: LaunchModalProps) => {
   let wiki_img_url = `https://upload.wikimedia.org/wikipedia/commons/5/5a/Wikipedia%27s_W.svg`;
   let yt_img_url = `https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg`;
   return (
-    <div className=" w-[650px]">
+    <div className="w-[650px]">
       <div className=" border">
         <span className="close" onClick={onClose}>
           &times;
