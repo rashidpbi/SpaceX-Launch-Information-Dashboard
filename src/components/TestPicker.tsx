@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { DateRangePicker, RangeKeyDict,createStaticRanges } from 'react-date-range';
+import React, { useEffect, useState, useRef } from 'react';
+import { DateRangePicker, RangeKeyDict, createStaticRanges } from 'react-date-range';
 import { useContext } from 'react';
 import { LaunchContext } from "../context/LaunchContext";
-
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import 'font-awesome/css/font-awesome.min.css';
@@ -20,7 +19,7 @@ import {
   addYears
 } from "date-fns";
 
-const today = addDays(new Date(),-3721)
+const today = addDays(new Date(), -3721)
 const defineds = {
   startOfWeek: startOfWeek(today),
   endOfWeek: endOfWeek(today),
@@ -45,32 +44,8 @@ const defineds = {
   startOflast2Year: startOfYear(addYears(today, -2)),
   endOflast2Year: endOfYear(addYears(today, -2))
 };
-/* const defineds = {
-  startOfWeek: startOfWeek(new Date()),
-  endOfWeek: endOfWeek(new Date()),
-  startOfLastWeek: startOfWeek(addDays(new Date(), -7)),
-  endOfLastWeek: endOfWeek(addDays(new Date(), -7)),
-  startOfToday: startOfDay(new Date()),
-  startOfLastSevenDay: startOfDay(addDays(new Date(), -7)),
-  startOfLastThirtyDay: startOfDay(addDays(new Date(), -30)),
-  startOfLastNintyDay: startOfDay(addDays(new Date(), -90)),
-  startOfLast180Day: startOfDay(addDays(new Date(), -180)),
-  endOfToday: endOfDay(new Date()),
-  startOfYesterday: startOfDay(addDays(new Date(), -1)),
-  endOfYesterday: endOfDay(addDays(new Date(), -1)),
-  startOfMonth: startOfMonth(new Date()),
-  endOfMonth: endOfMonth(new Date()),
-  startOfLastMonth: startOfMonth(addMonths(new Date(), -1)),
-  endOfLastMonth: endOfMonth(addMonths(new Date(), -1)),
-  startOfYear: startOfYear(new Date()),
-  endOfYear: endOfYear(new Date()),
-  startOflastYear: startOfYear(addYears(new Date(), -1)),
-  endOflastYear: endOfYear(addYears(new Date(), -1)),
-  startOflast2Year: startOfYear(addYears(new Date(), -2)),
-  endOflast2Year: endOfYear(addYears(new Date(), -2))
-}; */
 
-const initialState = {  //to include in case where state can be empty initially
+const initialState = {
   selection: {
     startDate: addDays(new Date(), -3720),
     endDate: addDays(new Date(), -3721),
@@ -82,17 +57,16 @@ const initialState = {  //to include in case where state can be empty initially
     key: "compare"
   }
 };
+
 const sideBarOptions = () => {
   const customDateObjects = [
     {
-        label: "past week",
-        range: () => ({
-          startDate: defineds.startOfLastSevenDay,
-          endDate: defineds.endOfToday
-        })
-      },
-      
-    
+      label: "past week",
+      range: () => ({
+        startDate: defineds.startOfLastSevenDay,
+        endDate: defineds.endOfToday
+      })
+    },
     {
       label: "past month",
       range: () => ({
@@ -101,20 +75,19 @@ const sideBarOptions = () => {
       })
     },
     {
-        label: "past 3 months",
-        range: () => ({
-          startDate: defineds.startOfLastNintyDay,
-          endDate: defineds.endOfToday
-        })
-      },
+      label: "past 3 months",
+      range: () => ({
+        startDate: defineds.startOfLastNintyDay,
+        endDate: defineds.endOfToday
+      })
+    },
     {
-        label: "past 6 months",
-        range: () => ({
-          startDate: defineds.startOfLast180Day,
-          endDate: defineds.endOfToday
-        })
-      },
-    
+      label: "past 6 months",
+      range: () => ({
+        startDate: defineds.startOfLast180Day,
+        endDate: defineds.endOfToday
+      })
+    },
     {
       label: "past year",
       range: () => ({
@@ -123,7 +96,7 @@ const sideBarOptions = () => {
       })
     },
     {
-      label: "past 2years",
+      label: "past 2 years",
       range: () => ({
         startDate: defineds.startOflast2Year,
         endDate: defineds.endOflast2Year
@@ -133,55 +106,60 @@ const sideBarOptions = () => {
 
   return customDateObjects;
 };
-export default function TestPicker() {
 
+export default function TestPicker() {
   const context = useContext(LaunchContext);
   const state = context?.state;
-  const setState = context?.setState;  
-  
-  const [open, setOpen] = React.useState(false);
+  const setState = context?.setState;
+
+  const [open, setOpen] = useState(false);
   const sideBar = sideBarOptions();
   const staticRanges = [
-    // ...defaultStaticRanges,
     ...createStaticRanges(sideBar)
   ];
 
-
-  const handleSelect = (ranges:RangeKeyDict) => {
+  const handleSelect = (ranges: RangeKeyDict) => {
     console.log(ranges);
-    if(setState===undefined || state ===undefined)return;
-    else{
-
+    if (setState && state) {
       setState({ ...state, ...ranges });
+      setOpen(false); // Close the date picker after selection
     }
-   
   };
-  /* useEffect(()=>{
-    if (!state || !setState) return;
-    if(setState===undefined)return;
-     setState(initialState);
-  },[state,setState]) */
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    const target = event.target as Node;
+    if (target && !document.getElementById('date-range-picker')?.contains(target)) {
+      setOpen(false); // Close the date picker if clicked outside
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
   return (
     <div>
-     
-     <button type="button" onClick={ () => { setOpen(!open); } }>{!open?'calender':'X'}</button> 
-        {open?(<DateRangePicker
-            // showSelectionPreview={true}
+      <button type="button" onClick={() => { setOpen(!open); }}>
+        {state?.selection?.startDate ? `${state.selection.startDate.toLocaleDateString()} - ${state.selection.endDate?.toLocaleDateString()}` : 'Select Date Range'}
+      </button>
+      {open && (
+        <div id="date-range-picker" className={open ? 'show' : 'hide'}>
+          <DateRangePicker
             ranges={[state?.selection || initialState.selection]}
             onChange={handleSelect}
             months={2}
             minDate={addDays(new Date(), -7200)}
             maxDate={addDays(new Date(), -721)}
             direction="horizontal"
-            // scroll={{ enabled: true }}
             showMonthAndYearPickers={true}
             staticRanges={staticRanges}
-        
-          />):<></>}
-    
+          />
+        </div>
+      )}
     </div>
   );
- 
 }
-
-
+//refined
