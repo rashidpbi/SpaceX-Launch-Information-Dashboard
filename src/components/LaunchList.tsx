@@ -31,7 +31,7 @@ const LaunchList = () => {
             <tr
               key={index}
               onClick={() => setSelectedLaunch(launch)}
-              className="text-center "
+              className="text-center"
             >
               <td className="py-2">{index + 1}</td>
               <td>{new Date(launch.launch_date_utc).toUTCString()}</td>
