@@ -12,23 +12,23 @@ const LaunchList = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className='my-8'>
-      <table>
-        <thead>
-          <tr>
-            <th>No:</th>
-            <th>Launched (UTC)</th>
-            <th>Location</th>
-            <th>Mission</th>
-            <th>orbit</th>
+    <div className='my-8 border rounded'>
+      <table className=' '>
+        <thead className='bg-gray-100'>
+          <tr className=''>
+            <th className='px-8'>No:</th>
+            <th className='px-8'>Launched (UTC)</th>
+            <th className='px-8'>Location</th>
+            <th className='px-8'>Mission</th>
+            <th className='px-8'>orbit</th>
 
-            <th>Launch Status</th>
-            <th>Rocket</th>
+            <th className='px-8'>Launch Status</th>
+            <th className='px-8'>Rocket</th>
           </tr>
         </thead>
         <tbody>
           {filteredLaunches.map((launch,index) => (
-            <tr key={index} onClick={() => setSelectedLaunch(launch)}>
+            <tr key={index} onClick={() => setSelectedLaunch(launch)} className='text-center'>
               <td>{index+1}</td>
               <td>{new Date(launch.launch_date_utc).toUTCString()}</td>
               <td>{launch.launch_site.site_name}</td>
