@@ -12,7 +12,7 @@ const LaunchList = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className='my-8'>
       <table>
         <thead>
           <tr>

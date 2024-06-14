@@ -4,15 +4,10 @@
   width: 100vh;
   height: 100vh;
 } */  
-.App {
-  text-align: center;
-}
 
 
-.container{
-  width: 100%;
-  height: 100%;
-}
+
+
 
 
 
@@ -29,7 +24,7 @@
   margin: 0 auto;
   height: 50%;
   margin-top: 100px;
-  margin-left: 260px;
+  
   }
   
   .hide {
