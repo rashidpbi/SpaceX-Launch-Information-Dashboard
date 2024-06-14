@@ -38,7 +38,7 @@ const Filters = () => {
 
   return (
     <div>
-      <div className="flex place-content-between">
+      <div className="flex place-content-between my-12">
         
         <div >
           <TestPicker />
