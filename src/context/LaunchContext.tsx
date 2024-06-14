@@ -24,8 +24,8 @@ export const LaunchProvider = ({ children }: { children: ReactNode }) => {
   
   const initialState = {
     selection: {
-      startDate: addDays(new Date(), -3720),
-      endDate: addDays(new Date(), -3721),
+      startDate: addDays(new Date(), -1612),
+      endDate: addDays(new Date(), -1050),
       key: "selection"
     },
     compare: {
