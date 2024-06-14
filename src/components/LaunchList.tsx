@@ -42,7 +42,7 @@ const LaunchList = () => {
               </td>
               <td className="flex justify-center items-center py-2">
                 {launch.launch_success ? (
-                  <div className="text-green-900 bg-green-100 rounded-3xl w-20 justify-center font-semibold">
+                  <div className="text-green-900 bg-green-100  rounded-3xl w-20 justify-center font-semibold">
                     Success
                   </div>
                 ) : launch.upcoming ? (

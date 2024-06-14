@@ -6,6 +6,7 @@ import LaunchList from "./components/LaunchList";
 function App() {
   return (
     <LaunchProvider>
+    
       <div className="flex justify-center items-center px-16 py-5 bg-white shadow-sm max-md:px-5">
       <img
         loading="lazy"
