@@ -44,7 +44,7 @@ const handleRowClick = (launch: Launch) => {
             <tr
               key={index}
               onClick={() => handleRowClick(launch)}
-              className="text-center"
+              className="text-center cursor-pointer"
             >
               <td className="py-2">
                 {index+1}
