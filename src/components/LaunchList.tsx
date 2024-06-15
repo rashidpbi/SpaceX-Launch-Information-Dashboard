@@ -2,15 +2,26 @@ import React, { useContext, useState } from "react";
 import { LaunchContext } from "../context/LaunchContext";
 import { Launch } from "../types";
 import LaunchModal from "../api/LaunchModal";
+import { useModal } from "../hooks/useModal";
 const LaunchList = () => {
   const context = useContext(LaunchContext);
-
   const [selectedLaunch, setSelectedLaunch] = useState<Launch | null>(null);
+  const { modal, openModal, closeModal } = useModal({
+    children: selectedLaunch ? (
+      <div className="bg-green-300">
+        <div className="bg-red-900 flex"><button type='button' title='button' className="btn ml-auto bg-red-200" onClick={() => closeModal()}>X</button></div>
+        <LaunchModal launch={selectedLaunch}/>
+      </div>
+    ) : null,
+  });
   if (!context) return <div>Loading...</div>;
   const { filteredLaunches, loading } = context;
 
   if (loading) return <div>Loading...</div>;
-
+const handleRowClick = (launch: Launch) => {
+    setSelectedLaunch(launch);
+    openModal();
+  };
   return (
     <div className="mt-8 border rounded">
       <table className=" ">
@@ -27,13 +38,17 @@ const LaunchList = () => {
           </tr>
         </thead>
         <tbody>
+         
           {filteredLaunches.map((launch, index) => (
+            
             <tr
               key={index}
-              onClick={() => setSelectedLaunch(launch)}
+              onClick={() => handleRowClick(launch)}
               className="text-center"
             >
-              <td className="py-2">{index + 1}</td>
+              <td className="py-2">
+                {index+1}
+              </td>
               <td>{new Date(launch.launch_date_utc).toUTCString()}</td>
               <td>{launch.launch_site.site_name}</td>
               <td>{launch.mission_name}</td>
@@ -60,12 +75,8 @@ const LaunchList = () => {
           ))}
         </tbody>
       </table>
-      {selectedLaunch && (
-        <LaunchModal
-          launch={selectedLaunch}
-          onClose={() => setSelectedLaunch(null)}
-        />
-      )}
+      {modal}
+      
     </div>
   );
 };
