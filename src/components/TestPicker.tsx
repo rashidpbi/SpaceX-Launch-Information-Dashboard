@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect } from 'react';
 import { DateRangePicker, RangeKeyDict, createStaticRanges } from 'react-date-range';
 import { useContext } from 'react';
 import { LaunchContext } from "../context/LaunchContext";
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import 'font-awesome/css/font-awesome.min.css';
+import { useModal } from "../hooks/useModal";
+
 import {
   addDays,
   endOfDay,
@@ -112,27 +114,47 @@ export default function TestPicker() {
   const state = context?.state;
   const setState = context?.setState;
 
-  const [open, setOpen] = useState(false);
   const sideBar = sideBarOptions();
   const staticRanges = [
     ...createStaticRanges(sideBar)
   ];
 
   const handleSelect = (ranges: RangeKeyDict) => {
-    console.log(ranges);
+    
     if (setState && state) {
       setState({ ...state, ...ranges });
-      setOpen(false); // Close the date picker after selection
     }
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
     const target = event.target as Node;
     if (target && !document.getElementById('date-range-picker')?.contains(target)) {
-      setOpen(false); // Close the date picker if clicked outside
     }
   };
 
+  const { modal, openModal, closeModal } = useModal({
+    children: (
+      <div className="bg-green-300">
+        <div className="bg-red-900 flex"><button type='button' title='button' className="btn ml-auto bg-red-200" onClick={() => closeModal()}>X</button></div>
+        
+        <DateRangePicker
+            ranges={[state?.selection || initialState.selection]}
+            onChange={handleSelect}
+            months={2}
+            minDate={addDays(new Date(), -7200)}
+            maxDate={addDays(new Date(), -721)}
+            direction="horizontal"
+            showMonthAndYearPickers={true}
+            staticRanges={staticRanges}
+          />
+      </div>
+    ) 
+  });
+
+  const handleRowClick = () => {
+    
+    openModal();
+  };
   useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick);
     return () => {
@@ -146,24 +168,18 @@ export default function TestPicker() {
   <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
 </svg>
 
-      <button type="button" onClick={() => { setOpen(!open); }}>
+      <button type="button" onClick={() => { 
+        
+        handleRowClick();
+        }}>
         {state?.selection?.startDate ? `${state.selection.startDate.toLocaleDateString()} - ${state.selection.endDate?.toLocaleDateString()}` : 'Select Date Range'}
       </button>
-      {open && (
-        <div id="date-range-picker" className={open ? 'show' : 'hide'}>
+    
+        <div id="">
           
-          <DateRangePicker
-            ranges={[state?.selection || initialState.selection]}
-            onChange={handleSelect}
-            months={2}
-            minDate={addDays(new Date(), -7200)}
-            maxDate={addDays(new Date(), -721)}
-            direction="horizontal"
-            showMonthAndYearPickers={true}
-            staticRanges={staticRanges}
-          />
+         
         </div>
-      )}
+        {modal}
     </div>
   );
 }

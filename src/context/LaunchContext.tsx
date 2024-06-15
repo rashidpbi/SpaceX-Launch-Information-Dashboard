@@ -40,7 +40,7 @@ export const LaunchProvider = ({ children }: { children: ReactNode }) => {
       setLoading(true);
       const { data } = await getLaunches();
       setLaunches(data);
-      console.log("data:", data);
+     
       setFilteredLaunches(data);
       setLoading(false);
     };

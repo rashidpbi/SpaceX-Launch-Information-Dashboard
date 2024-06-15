@@ -12,7 +12,7 @@ export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
     return (
       <div className=''>
         <dialog ref={ref} className="modal">
-          <div className={`modal-box ${modalBoxClassName ?? ''}`}>{children}</div>
+          <div className={`modal-box modal-box-update ${modalBoxClassName ?? ''}`}>{children}</div>
           <form method="dialog" className="modal-backdrop">
             <button
               type="button"
