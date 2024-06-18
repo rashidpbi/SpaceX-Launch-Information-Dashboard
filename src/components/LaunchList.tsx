@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { LaunchContext } from "../context/LaunchContext";
 import { Launch } from "../types";
-import LaunchModal from "../api/LaunchModal";
+import LaunchModal from "./LaunchModal";
 import { useModal } from "../hooks/useModal";
 import Pagination from "./Pagination";
 
@@ -14,12 +14,12 @@ const LaunchList = () => {
   const { modal, openModal, closeModal } = useModal({
     //
     children: selectedLaunch ? (
-      <div className="bg-green-300">
-        <div className="bg-red-900 flex">
+      <div className="">
+        <div className="flex">
           <button
             type="button"
             title="button"
-            className="btn ml-auto bg-red-200"
+            className="btn ml-auto "
             onClick={() => closeModal()}
           >
             X
@@ -33,7 +33,40 @@ const LaunchList = () => {
   if (!context) return <div>Loading...</div>;
   const { filteredLaunches, loading, currentPage, setCurrentPage } = context;
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="">
+        <div className="mt-8 border rounded  h-[400px] w-[1100px] ">
+          <table className="w-[1100px] ">
+            <thead className=" h-4 ">
+              <tr className="w-[1100px] ">
+                <th className="px-8">No:</th>
+                <th className="px-8">Launched (UTC)</th>
+                <th className="px-8">Location</th>
+                <th className="px-8">Mission</th>
+                <th className="px-8">Orbit</th>
+                <th className="px-8">Launch Status</th>
+                <th className="px-8">Rocket</th>
+              </tr>
+            </thead>
+            <tbody className="">
+              <tr>
+                <td colSpan={7} className="text-center py-4">
+                  <iframe
+                    src="https://giphy.com/embed/3oEjI6SIIHBdRxXI40"
+                    width="480"
+                    height="480"
+                    frameBorder="0"
+                    className="giphy-embed  mx-auto"
+                    allowFullScreen
+                  ></iframe>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
 
   const handleRowClick = (launch: Launch) => {
     //
@@ -55,56 +88,68 @@ const LaunchList = () => {
   }
 
   return (
-    <div>
-      <div className="mt-8 border rounded">
-        <table className=" ">
-          <thead className="bg-gray-100">
-            <tr className="">
+    <div className="">
+      <div className="mt-8 border rounded  h-[400px] w-[1100px] overflow-hidden">
+        <table className="w-[1100px] ">
+          <thead className=" h-4 bg-gray-100  ">
+            <tr className="w-[1100px] ">
               <th className="px-8">No:</th>
               <th className="px-8">Launched (UTC)</th>
               <th className="px-8">Location</th>
               <th className="px-8">Mission</th>
-              <th className="px-8">orbit</th>
+              <th className="px-8">Orbit</th>
               <th className="px-8">Launch Status</th>
               <th className="px-8">Rocket</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="">
             {}
-            {itemsToDisplay.map((launch: any, index: any) => (
-              <tr
-                key={index}
-                onClick={() => handleRowClick(launch)}
-                className="text-center cursor-pointer"
-              >
-                <td className="py-2">
-                  {itemsPerPage * currentPage + (index + 1)}
+            {itemsToDisplay.length > 0 ? (
+              itemsToDisplay.map((launch: any, index: any) => (
+                <tr
+                  key={index}
+                  onClick={() => handleRowClick(launch)}
+                  className="text-center cursor-pointer w-[1100px]"
+                >
+                  <td className="py-2">
+                    {itemsPerPage * currentPage + (index + 1)}
+                  </td>
+                  <td>
+                    {new Date(launch.launch_date_utc)
+                      .toUTCString()
+                      .substring(0, 17)}
+                  </td>
+                  <td>{launch.launch_site.site_name}</td>
+                  <td>{launch.mission_name}</td>
+                  <td>
+                    {launch.rocket?.second_stage?.payloads?.[1]?.orbit ||
+                      "Unknown"}
+                  </td>
+                  <td className="flex justify-center items-center py-2">
+                    {launch.launch_success ? (
+                      <div className="text-green-900 bg-green-100  rounded-3xl w-20 justify-center font-semibold">
+                        Success
+                      </div>
+                    ) : launch.upcoming ? (
+                      <div className="text-amber-800 bg-yellow-100 rounded-3xl w-24 justify-center font-semibold">
+                        upcoming
+                      </div>
+                    ) : (
+                      <div className="text-rose-800 bg-rose-200 rounded-3xl w-16 justify-center font-semibold">
+                        failure
+                      </div>
+                    )}
+                  </td>
+                  <td>{launch.rocket.rocket_name}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7} className="text-center py-4">
+                  No results found for the specified filter.
                 </td>
-                <td>{new Date(launch.launch_date_utc).toUTCString()}</td>
-                <td>{launch.launch_site.site_name}</td>
-                <td>{launch.mission_name}</td>
-                <td>
-                  {launch.rocket?.second_stage?.payloads?.[1]?.orbit ||
-                    "Unknown"}
-                </td>
-                <td className="flex justify-center items-center py-2">
-                  {launch.launch_success ? (
-                    <div className="text-green-900 bg-green-100  rounded-3xl w-20 justify-center font-semibold">
-                      Success
-                    </div>
-                  ) : launch.upcoming ? (
-                    <div className="text-amber-800 bg-yellow-100 rounded-3xl w-24 justify-center font-semibold">
-                      upcoming
-                    </div>
-                  ) : (
-                    <div className="text-rose-800 bg-rose-200 rounded-3xl w-16 justify-center font-semibold">
-                      failure
-                    </div>
-                  )}
-                </td>
-                <td>{launch.rocket.rocket_name}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
         {modal}

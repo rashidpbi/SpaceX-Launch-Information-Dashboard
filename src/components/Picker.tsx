@@ -134,8 +134,8 @@ export default function Picker() {
 
   const { modal, openModal, closeModal } = useModal({
     children: (
-      <div className="bg-green-300">
-        <div className="bg-red-900 flex"><button type='button' title='button' className="btn ml-auto bg-red-200" onClick={() => closeModal()}>X</button></div>
+      <div className="">
+        <div className=" flex"><button type='button' title='button' className=" btn ml-auto mb-2" onClick={() => closeModal()}>X</button></div>
         
         <DateRangePicker
             ranges={[state?.selection || initialState.selection]}

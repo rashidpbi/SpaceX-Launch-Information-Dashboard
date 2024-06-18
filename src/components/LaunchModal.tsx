@@ -16,7 +16,7 @@ const LaunchModal = ({ launch }: LaunchModalProps) => {
     <div className="">
       <div className="">
         
-        <div className="flex m-4">
+        <div className="flex mx-4">
           
           <div>
             <img
@@ -44,14 +44,14 @@ const LaunchModal = ({ launch }: LaunchModalProps) => {
               </div>
             </div>
             <div>Rocket: {launch.rocket.rocket_name}</div>
-            <div className="flex" >
-              <a href={nasa_src} title="wiki" target="_blank" rel="noreferrer">
+            <div className="flex space-between" >
+              <a href={nasa_src} title="wiki" target="_blank" rel="noreferrer" >
                 <img src={nasa_img_url} style={{ height: 30, width: 30 }} alt="" />
               </a>
-              <a href={wiki_url} title="wiki" target="_blank" rel="noreferrer">
+              <a href={wiki_url} title="wiki" target="_blank" rel="noreferrer" className="mx-1">
                 <img src={wiki_img_url} style={{ height: 30, width: 30 }} alt="" />
               </a>
-              <a href={yt_url} title="yt" target="_blank" rel="noreferrer">
+              <a href={yt_url} title="yt" target="_blank" rel="noreferrer" className="mx-1">
                 <img src={yt_img_url} style={{ height: 30, width: 30 }} alt="" />
               </a>
             </div>

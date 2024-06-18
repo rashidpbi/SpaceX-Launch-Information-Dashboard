@@ -11,23 +11,25 @@ export const Modal = forwardRef<HTMLDialogElement, ModalProps>(
   ({ children, modalBoxClassName, onBackdropClick }, ref) => {
     return (
       <div className="">
-        <dialog ref={ref} className="modal">
-          <div
-            className={`modal-box modal-box-update ${modalBoxClassName ?? ""}`}
-          >
-            {children}
-          </div>
-          <form method="dialog" className="modal-backdrop">
-            <button
-              type="button"
-              onClick={() => {
-                onBackdropClick && onBackdropClick();
-              }}
+        
+          <dialog ref={ref} className="modal  mx-auto">
+            <div
+              className={`modal-box modal-box-update ${modalBoxClassName ?? ""}`}
             >
-              close
-            </button>
-          </form>
-        </dialog>
+              {children}
+            </div>
+            <form method="dialog" className="modal-backdrop">
+              <button
+                type="button"
+                onClick={() => {
+                  onBackdropClick && onBackdropClick();
+                }}
+              >
+                close
+              </button>
+            </form>
+          </dialog>
+       
       </div>
     );
   }
