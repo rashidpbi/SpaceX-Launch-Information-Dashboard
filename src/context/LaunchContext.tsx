@@ -11,6 +11,8 @@ interface LaunchContextProps {
   setFilteredLaunches: (launches: Launch[]) => void;
   state:InitialState,
   setState:(state:InitialState)=>void;
+  currentPage:number,
+  setCurrentPage:(currentPage:number)=>void;
 }
 
 export const LaunchContext = createContext<LaunchContextProps | undefined>(
@@ -21,7 +23,8 @@ export const LaunchProvider = ({ children }: { children: ReactNode }) => {
   const [launches, setLaunches] = useState<Launch[]>([]);
   const [filteredLaunches, setFilteredLaunches] = useState<Launch[]>([]);
   const [loading, setLoading] = useState(true);
-  
+  const [currentPage, setCurrentPage] = useState<number>(0);
+
   const initialState = {
     selection: {
       startDate: addDays(new Date(), -1612),
@@ -50,7 +53,7 @@ export const LaunchProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <LaunchContext.Provider
-      value={{ launches, loading, filteredLaunches, setFilteredLaunches,state,setState }}
+      value={{ launches, loading, filteredLaunches, setFilteredLaunches,state,setState,currentPage,setCurrentPage }}
     >
       {children}
     </LaunchContext.Provider>

@@ -109,7 +109,7 @@ const sideBarOptions = () => {
   return customDateObjects;
 };
 
-export default function TestPicker() {
+export default function Picker() {
   const context = useContext(LaunchContext);
   const state = context?.state;
   const setState = context?.setState;
