@@ -1,20 +1,3 @@
-
-/* .container{
-  background-color: blue;
-  width: 100vh;
-  height: 100vh;
-} */  
-
-
-
-
-
-
-
-
-
-
-
 .show {
   position: absolute;
   z-index: 1000;
@@ -24,16 +7,14 @@
   margin: 0 auto;
   height: 50%;
   margin-top: 100px;
-  
-  }
-  
-  .hide {
+}
+
+.hide {
   opacity: 0;
   pointer-events: none;
-  }
+}
 
-
- .modal-box-update{
+.modal-box-update {
   width: 92%;
-    max-width: 60rem;
- }
+  max-width: 60rem;
+}

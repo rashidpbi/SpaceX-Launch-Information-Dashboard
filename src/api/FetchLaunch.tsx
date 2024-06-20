@@ -1,5 +1,5 @@
 import React from "react";
-import { getLaunches } from "../Api";
+import { getLaunches } from "./Api";
 import { useEffect, useState } from "react";
 import { Launch } from "../types";
 
