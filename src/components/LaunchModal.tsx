@@ -36,10 +36,10 @@ const LaunchModal = ({ launch }: LaunchModalProps) => {
                 </div>
                   : launch.upcoming
                   ? <div className="flex text-amber-800 bg-yellow-100 rounded-3xl w-28 h-6 items-center  justify-center font-semibold">
-                  upcoming
+                  Upcoming
                 </div>
                   : <div className=" flex text-rose-800 bg-rose-200 rounded-3xl w-16 h-6 items-center  justify-center font-semibold">
-                  failure
+                  Failure
                 </div>}
               </div>
             </div>

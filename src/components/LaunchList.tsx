@@ -133,11 +133,11 @@ const LaunchList = () => {
                       </div>
                     ) : launch.upcoming ? (
                       <div className="text-amber-800 bg-yellow-100 rounded-3xl w-24 justify-center font-semibold">
-                        upcoming
+                        Upcoming
                       </div>
                     ) : (
                       <div className="text-rose-800 bg-rose-200 rounded-3xl w-16 justify-center font-semibold">
-                        failure
+                        Failure
                       </div>
                     )}
                   </td>
