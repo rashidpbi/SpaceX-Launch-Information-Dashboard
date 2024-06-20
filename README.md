@@ -76,8 +76,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [rashidpbi786@gmail.com](mailto:rashidpbi786@gmail.com)
+[rashidpbi](mailto:rashidpbi786@gmail.com)
 
-Project Link: [https://github.com/rashidpbi/SpaceX-Launch-Information-Dashboard.git](https://github.com/rashidpbi/SpaceX-Launch-Information-Dashboard.git)
+[Project Link:](https://github.com/rashidpbi/SpaceX-Launch-Information-Dashboard.git)
 
 
