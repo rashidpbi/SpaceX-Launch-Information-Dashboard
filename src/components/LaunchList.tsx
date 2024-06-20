@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import  { useContext, useState } from "react";
 import { LaunchContext } from "../context/LaunchContext";
 import { Launch } from "../types";
 import LaunchModal from "./LaunchModal";
@@ -12,7 +12,7 @@ const LaunchList = () => {
   const paginatedItems: Object[] = [];
   const [selectedLaunch, setSelectedLaunch] = useState<Launch | null>(null);
   const { modal, openModal, closeModal } = useModal({
-    //
+    
     children: selectedLaunch ? (
       <div className="">
         <div className="flex">
@@ -59,6 +59,7 @@ const LaunchList = () => {
                     frameBorder="0"
                     className="giphy-embed  mx-auto"
                     allowFullScreen
+                    title="loading"
                   ></iframe>
                 </td>
               </tr>

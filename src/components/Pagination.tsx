@@ -53,7 +53,7 @@ export default function Pagination(props: IPagination) {
         );
       } else {
         const start = currentPage - step;
-        const end = currentPage + step;
+        // const end = currentPage + step;
 
         pageNumbers.push(
           ...Array.from({ length: midPageCount }, (_, i) => start + i + 1)
